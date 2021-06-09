@@ -17,9 +17,17 @@
         <div class="template-container"></div>
     </main>
     <div class="generator-container hidden">
-        <label for="memetext"> please type in your meme text</label> <input oninput="inputTyped(this)" type="text" name="memeText">
-        <button onclick="switchLines()">switch line</button>
+        <div class="ui-container">
+            <label for="meme-text"> please type in your meme text</label> <input oninput="inputTyped(this)" type="text" name="meme-text" class="meme-text">
+            <button class="font-size" onclick="changeFontSize(2)">+</button>
+            <button class="font-size" onclick="changeFontSize(-2)">-</button>
+            <button class="text-Location" onclick="changeTextLocation(-2)">up</button>
+            <button class="text-Location" onclick="changeTextLocation(2)">down</button>
+
+            <button class="line-switch" onclick="switchLines()">switch line</button>
+        </div>
         <canvas class="generator"></canvas>
+
     </div>
 
     <script src="js/storage-services.js"></script>

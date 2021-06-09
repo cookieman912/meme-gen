@@ -17,15 +17,19 @@ function loadInitialImage(currId) {
     gCurrImg = new Image();
     gCurrImg.src = source;
     renderImg(gCurrImg);
-    drawText('type in your meme!', 150, 20)
+    drawText(gCurrTextLine, 150, 20)
 
 }
 
-function loadImage(topTextValue) {
+function loadImage() {
     renderImg(gCurrImg);
-    drawText(topTextValue, 150, 20)
+    drawText(gLines[0], 150)
+    drawText(gLines[1], 150)
 
 }
+
+
+
 
 function renderMemes() {
     var strHtmls = '<ul>';
@@ -34,7 +38,7 @@ function renderMemes() {
     })
     strHtmls += `</ul>`
     document.querySelector('.template-container').innerHTML = strHtmls
-    console.log(strHtmls);
+
 
 }
 
@@ -43,24 +47,69 @@ function renderImg() {
 }
 
 function inputTyped(el) {
-    console.dir(el)
-    clearCanvas();
-    loadImage(el.value)
+    switch (gCurrTextLineIdx) {
+        case 0:
+            clearCanvasPart(0)
+            gLines[0].text = el.value
+
+            break;
+
+        case 1:
+            clearCanvasPart(125)
+            gLines[1].text = el.value
+            break;
+    }
+    loadImage()
 
 }
 
-function drawText(text, x, y) {
+function drawText(line, x, ) {
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
-    gCtx.font = '20px IMPACT'
+    gCtx.font = `${line.fontSize}px IMPACT`
     gCtx.textAlign = 'center'
-    gCtx.fillText(text, x, y)
-    gCtx.strokeText(text, x, y)
+    gCtx.fillText(line.text, x, line.height)
+    gCtx.strokeText(line.text, x, line.height)
+}
+
+function switchLines() {
+    if (gCurrTextLineIdx === 1) {
+        gCurrTextLine = gLines[0];
+        gCurrTextLineIdx = 0;
+
+    } else {
+        gCurrTextLineIdx++;
+        gCurrTextLine = gLines[gCurrTextLineIdx];
+
+    }
+    document.querySelector(".meme-text").value = gCurrTextLine.text;
+}
+
+function changeFontSize(changeValue) {
+    gCurrTextLine.fontSize += changeValue;
+    loadImage();
+}
+
+function changeTextLocation(changeValue) {
+    gCurrTextLine.height += changeValue
+    loadImage();
+
 }
 
 function clearCanvas() {
+
+
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-    loadImage()
+        // loadImage()
+
+}
+
+
+
+
+function clearCanvasPart(partValue) {
+    gCtx.clearRect(0, partValue, gElCanvas.width, partValue + 25)
+        // loadImage()
 
 }

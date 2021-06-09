@@ -21,6 +21,11 @@ img {
     width: 150px;
 }
 
+.ui-container {
+    display: block;
+    margin-bottom: 15px;
+}
+
 
 /* 
 .current-image {
