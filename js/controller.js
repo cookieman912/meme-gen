@@ -12,7 +12,7 @@ function loadInitialImage(currId) {
         return image.id === currId
     })
     let source = gCurrImg.url
-    document.querySelector('main').classList.add('hidden')
+    document.querySelector('.template-container').classList.add('hidden')
     document.querySelector('.generator-container').classList.remove('hidden')
     gCurrImg = new Image();
     gCurrImg.src = source;
@@ -32,7 +32,7 @@ function loadImage() {
 
 
 function renderMemes() {
-    var strHtmls = '<ul>';
+    var strHtmls = '<ul class="clean-list">';
     gImgs.forEach(img => {
         strHtmls += `<li><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></li>`
     })

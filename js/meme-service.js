@@ -2,8 +2,9 @@
 
 var gKeywords = { 'happy': 12, 'funny puk': 1 }
 var gImgs = [{ id: '1', url: 'img/1.jpg', keywords: ['happy'] }, { id: '3', url: 'img/3.jpg', keywords: ['funny puk'] }, { id: '4', url: 'img/4.jpg', keywords: ['funny puk'] },
-    { id: '5', url: 'img/5.jpg', keywords: ['funny puk'] }
+    { id: '5', url: 'img/5.jpg', keywords: ['funny puk'] }, { id: '6', url: 'img/6.jpg', keywords: ['happy'] }
 ];
+
 var gMeme = {
     selectedImgId: 5,
     selectedLineIdx: 0,
