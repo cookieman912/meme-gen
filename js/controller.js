@@ -22,23 +22,28 @@ function loadInitialImage(currId) {
 
 }
 
-function loadImage() {
+function loadImage(withBoxes) {
     renderImg(gCurrImg);
     gLines.forEach((line) => {
         drawText(line)
     })
-    drawBox(gCurrTextLine.x, gCurrTextLine.y)
-    drawText(gCurrTextLine)
+    if (withBoxes && gCurrTextLine) drawBox(gCurrTextLine.x, gCurrTextLine.y);
+    if (gCurrTextLine) drawText(gCurrTextLine);
 
 }
 
 
 
 
+
 function renderMemes() {
+    var strSearch = document.querySelector('.searchbar').value
+    strSearch.toLowerCase();
+
     var strHtmls = '';
     gImgs.forEach(img => {
-        strHtmls += `<div class="meme-grid-item"><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></div>`
+        if (img.keywords.some(keyword => keyword.includes(strSearch)))
+            strHtmls += `<div class="meme-grid-item"><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></div>`
     })
     document.querySelector('.template-container').innerHTML = strHtmls
 
@@ -55,7 +60,7 @@ function inputTyped(el) {
         clearCanvasPart(line.y)
 
     });
-    loadImage();
+    loadImage(true);
 
 }
 
@@ -71,49 +76,42 @@ function drawText(line) {
 
 function drawBox(x, y) {
     gCtx.beginPath()
-    gCtx.rect(x - 120, y - 20, x + 90, y + 20)
-    console.log(x - 120, y - 20, x + 90, y + 20);
+    gCtx.rect(x - 150, y - 40, x + 100, y + 20)
     gCtx.strokeStyle = 'black'
     gCtx.stroke()
 }
 
 function switchLines() {
+    if (gLines.length <= 1) return;
     if (gCurrTextLine.id === gTextId - 1) {
-        console.log('in condition');
         gCurrTextLine = gLines[0];
 
     } else {
-
-        gCurrTextLine = gLines[gCurrTextLine.id + 1];
+        let currIdx = gLines.findIndex(line => gCurrTextLine.id === line.id)
+        gCurrTextLine = gLines[currIdx + 1];
 
     }
-    console.log(gCurrTextLine);
     document.querySelector(".meme-text").value = gCurrTextLine.text;
 }
 
 function changeFontSize(changeValue) {
     gCurrTextLine.fontSize += changeValue;
-    loadImage();
+    loadImage(true);
 }
 
 function changeTextLocation(changeValue) {
     gCurrTextLine.y += changeValue
-    loadImage();
+    loadImage(true);
 
 }
 
 function clearCanvas() {
-
-
     gCtx.clearRect(0, 0, gElCanvas.width, gElCanvas.height)
-        // loadImage()
-
 }
 
 
 function clearCanvasPart(partValue) {
     gCtx.clearRect(0, partValue, gElCanvas.width, partValue + 25)
-        // loadImage()
 
 }
 

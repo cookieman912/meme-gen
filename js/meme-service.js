@@ -1,12 +1,11 @@
 'use strict'
-
-var gKeywords = { 'happy': 12, 'funny puk': 1 }
-var gImgs = [{ id: '1', url: 'img/1.jpg', keywords: ['happy'] }, { id: '2', url: 'img/2.jpg', keywords: ['funny puk'] }, { id: '3', url: 'img/3.jpg', keywords: ['funny puk'] }, { id: '4', url: 'img/4.jpg', keywords: ['funny puk'] },
-    { id: '5', url: 'img/5.jpg', keywords: ['funny puk'] }, { id: '6', url: 'img/6.jpg', keywords: ['happy'] }, { id: '7', url: 'img/7.jpg', keywords: ['happy'] },
-    { id: '8', url: 'img/8.jpg', keywords: ['happy'] }, { id: '9', url: 'img/9.jpg', keywords: ['happy'] }, { id: '10', url: 'img/10.jpg', keywords: ['happy'] },
-    { id: '11', url: 'img/11.jpg', keywords: ['happy'] }, { id: '12', url: 'img/12.jpg', keywords: ['happy'] }, { id: '13', url: 'img/13.jpg', keywords: ['happy'] },
-    { id: '14', url: 'img/14.jpg', keywords: ['happy'] }, { id: '15', url: 'img/15.jpg', keywords: ['happy'] }, { id: '16', url: 'img/16.jpg', keywords: ['happy'] },
-    { id: '17', url: 'img/17.jpg', keywords: ['happy'] }, { id: '18', url: 'img/18.jpg', keywords: ['happy'] },
+var gImgs = [{ id: '1', url: 'img/1.jpg', keywords: ['trump', 'donald'], }, { id: '2', url: 'img/2.jpg', keywords: ['dogs', 'puppies'] }, { id: '3', url: 'img/3.jpg', keywords: ['dogs', 'puppies', 'baby'] },
+    { id: '4', url: 'img/4.jpg', keywords: ['cat', 'laptop'] },
+    { id: '5', url: 'img/5.jpg', keywords: ['success', 'kid', 'baby'] }, { id: '6', url: 'img/6.jpg', keywords: ['aliens', 'history channel'] }, { id: '7', url: 'img/7.jpg', keywords: ['baby', 'kid', 'boy'] },
+    { id: '8', url: 'img/8.jpg', keywords: ['willi wonka', 'charlie', 'chocolate factory'] }, { id: '9', url: 'img/9.jpg', keywords: ['baby', 'evil', 'sinister'] }, { id: '10', url: 'img/10.jpg', keywords: ['barack', 'obama'] },
+    { id: '11', url: 'img/11.jpg', keywords: ['kissing'] }, { id: '12', url: 'img/12.jpg', keywords: ['what would you do'] }, { id: '13', url: 'img/13.jpg', keywords: ['leonardo dicaprio', 'great gatsby'] },
+    { id: '14', url: 'img/14.jpg', keywords: ['morpheus', 'matrix', 'what if i told you'] }, { id: '15', url: 'img/15.jpg', keywords: ['boromir', 'mordor', 'one does not simply'] }, { id: '16', url: 'img/16.jpg', keywords: ['picard', 'star trek'] },
+    { id: '17', url: 'img/17.jpg', keywords: ['vladimir putin'] }, { id: '18', url: 'img/18.jpg', keywords: ['toy story', 'everywhere', 'buzz lightyear'] },
 ];
 
 // var gMeme = {
@@ -20,7 +19,7 @@ var gImgs = [{ id: '1', url: 'img/1.jpg', keywords: ['happy'] }, { id: '2', url:
 //     }]
 // }
 var gTextId = 0;
-var gLines = [_buildLine(20), _buildLine(130)]
+var gLines = [_buildLine(20), _buildLine(380)]
 var gCurrTextLine = gLines[0];
 var gElCanvas = document.querySelector('.generator')
 resizeCanvas();
@@ -37,20 +36,15 @@ function addLine(height) {
     gLines.push(newLine)
     gCurrTextLine = newLine
     document.querySelector(".meme-text").value = gCurrTextLine.text;
-
-
 }
 
-function _buildLine(y) {
-    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId }
-    gTextId++;
-    console.log('after buidling', gTextId);
-    return newLine;
-}
+
 
 function downloadMeme(elLink) {
+    loadImage(false)
     var imgContent = gElCanvas.toDataURL('image/jpeg')
     elLink.href = imgContent
+    loadImage(true)
 }
 
 function getObjectFitSize(isContain, containerWidth, containerHeight, width, height) {
@@ -79,4 +73,26 @@ function getObjectFitSize(isContain, containerWidth, containerHeight, width, hei
 function resizeCanvas() {
     gElCanvas.width = 400;
     gElCanvas.height = 400;
+}
+
+function removeLine() {
+
+    if (!gLines.length === 0) return;
+    let deletedline = gCurrTextLine;
+    if (gLines.length > 1) switchLines();
+    else {
+        console.log(gLines);
+        console.log('null!');
+        gCurrTextLine = null
+    }
+    let deletedIdx = gLines.findIndex(line => deletedline.id === line.id)
+    gLines.splice(deletedIdx, 1)
+    loadImage(true)
+
+}
+
+function _buildLine(y) {
+    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId }
+    gTextId++;
+    return newLine;
 }

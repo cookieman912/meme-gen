@@ -23,7 +23,7 @@
         <main class="main-container">
             <div class="gallery-container">
                 <nav class="gallery-nav">
-                    <input class="searchbar" type="text" placeholder="Search..">
+                    <input class="searchbar" oninput="renderMemes()" type="text" placeholder="Search..">
                     <img class="search-icon" src="img/searchicon.png" alt="">
                     <ul class="keywords clean-list">
                         <li>funny</li>
@@ -41,15 +41,15 @@
                         <select class="line-add" onchange="addLine(this.value)">
                         <option value="">add line</option>
                         <option value="20">top</option>
-                        <option value="150">bottom</option>
-                        <option value="70">middle</option></select>
+                        <option value="380">bottom</option>
+                        <option value="220">middle</option></select>
                         <button class="line-remove" onclick="removeLine()"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        <button class="generic-button" onclick="changeTextLocation(-2)">🠕</button>
-                        <button class="generic-button" onclick="changeTextLocation(2)">🠗</button>
+                        <button class="generic-button" onclick="changeTextLocation(-4)">🠕</button>
+                        <button class="generic-button" onclick="changeTextLocation(4)">🠗</button>
                     </div>
                     <div class="font-options">
-                        <button class="generic-button" onclick="changeFontSize(2)">A+</button>
-                        <button class="generic-button" onclick="changeFontSize(-2)">A-</button>
+                        <button class="generic-button" onclick="changeFontSize(4)">A+</button>
+                        <button class="generic-button" onclick="changeFontSize(-4)">A-</button>
                     </div>
                     <div class="download-options">
                         <a href="#" class="download" onclick="downloadMeme(this)" download="my-img.jpg">Download</a>
