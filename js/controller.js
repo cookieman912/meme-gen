@@ -12,8 +12,9 @@ function loadInitialImage(currId) {
         return image.id === currId
     })
     let source = gCurrImg.url
-    document.querySelector('.template-container').classList.add('hidden')
+    document.querySelector('.gallery-container').classList.add('hidden')
     document.querySelector('.generator-container').classList.remove('hidden')
+    document.querySelector('.generator-container').classList.add('flex')
     gCurrImg = new Image();
     gCurrImg.src = source;
     renderImg(gCurrImg);
@@ -23,8 +24,11 @@ function loadInitialImage(currId) {
 
 function loadImage() {
     renderImg(gCurrImg);
-    drawText(gLines[0], 150)
-    drawText(gLines[1], 150)
+    gLines.forEach((line) => {
+        drawText(line)
+    })
+    drawBox(gCurrTextLine.x, gCurrTextLine.y)
+    drawText(gCurrTextLine)
 
 }
 
@@ -32,11 +36,10 @@ function loadImage() {
 
 
 function renderMemes() {
-    var strHtmls = '<ul class="clean-list">';
+    var strHtmls = '';
     gImgs.forEach(img => {
-        strHtmls += `<li><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></li>`
+        strHtmls += `<div class="meme-grid-item"><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></div>`
     })
-    strHtmls += `</ul>`
     document.querySelector('.template-container').innerHTML = strHtmls
 
 
@@ -47,42 +50,44 @@ function renderImg() {
 }
 
 function inputTyped(el) {
-    switch (gCurrTextLineIdx) {
-        case 0:
-            clearCanvasPart(0)
-            gLines[0].text = el.value
+    gCurrTextLine.text = el.value;
+    gLines.forEach((line) => {
+        clearCanvasPart(line.y)
 
-            break;
-
-        case 1:
-            clearCanvasPart(125)
-            gLines[1].text = el.value
-            break;
-    }
-    loadImage()
+    });
+    loadImage();
 
 }
 
-function drawText(line, x, ) {
+function drawText(line) {
     gCtx.lineWidth = 1
     gCtx.strokeStyle = 'black'
     gCtx.fillStyle = 'white'
     gCtx.font = `${line.fontSize}px IMPACT`
     gCtx.textAlign = 'center'
-    gCtx.fillText(line.text, x, line.height)
-    gCtx.strokeText(line.text, x, line.height)
+    gCtx.fillText(line.text, line.x, line.y)
+    gCtx.strokeText(line.text, line.x, line.y)
+}
+
+function drawBox(x, y) {
+    gCtx.beginPath()
+    gCtx.rect(x - 120, y - 20, x + 90, y + 20)
+    console.log(x - 120, y - 20, x + 90, y + 20);
+    gCtx.strokeStyle = 'black'
+    gCtx.stroke()
 }
 
 function switchLines() {
-    if (gCurrTextLineIdx === 1) {
+    if (gCurrTextLine.id === gTextId - 1) {
+        console.log('in condition');
         gCurrTextLine = gLines[0];
-        gCurrTextLineIdx = 0;
 
     } else {
-        gCurrTextLineIdx++;
-        gCurrTextLine = gLines[gCurrTextLineIdx];
+
+        gCurrTextLine = gLines[gCurrTextLine.id + 1];
 
     }
+    console.log(gCurrTextLine);
     document.querySelector(".meme-text").value = gCurrTextLine.text;
 }
 
@@ -92,7 +97,7 @@ function changeFontSize(changeValue) {
 }
 
 function changeTextLocation(changeValue) {
-    gCurrTextLine.height += changeValue
+    gCurrTextLine.y += changeValue
     loadImage();
 
 }
@@ -106,10 +111,18 @@ function clearCanvas() {
 }
 
 
-
-
 function clearCanvasPart(partValue) {
     gCtx.clearRect(0, partValue, gElCanvas.width, partValue + 25)
         // loadImage()
 
+}
+
+function returnToGallery() {
+    document.querySelector('.gallery-container').classList.remove('hidden')
+    document.querySelector('.generator-container').classList.add('hidden')
+    document.querySelector('.generator-container').classList.remove('flex')
+    gTextId = 0;
+    gLines = [_buildLine(20), _buildLine(130)]
+    gCurrTextLine = gLines[0]
+    document.querySelector(".meme-text").value = gCurrTextLine.text;
 }

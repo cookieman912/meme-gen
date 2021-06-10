@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="lib/fontawesome-free-5.15.3-web/css/fontawesome.css">
     <title>Yaniv-generator</title>
 </head>
 
@@ -15,28 +16,54 @@
 
         <nav class=main-nav> <span class="logo">yaniv-generator</span>
             <ul class="clean-list">
-                <li>gallery</li>
-                <li>about</li>
+                <li> <button onclick="returnToGallery()">gallery</button> </li>
+                <li> <button>about</button> </li>
             </ul>
         </nav>
         <main class="main-container">
-            <div class="template-container"></div>
-
+            <div class="gallery-container">
+                <nav class="gallery-nav">
+                    <input class="searchbar" type="text" placeholder="Search..">
+                    <img class="search-icon" src="img/searchicon.png" alt="">
+                    <ul class="keywords clean-list">
+                        <li>funny</li>
+                        <li>animal</li>
+                        <li>man</li>
+                    </ul> <button class="more">more</button></nav>
+                <div class="template-container"></div>
+            </div>
             <div class="generator-container hidden">
-                <div class="ui-container">
-                    <label for="meme-text"> please type in your meme text</label> <input oninput="inputTyped(this)" type="text" name="meme-text" class="meme-text">
-                    <button class="font-size" onclick="changeFontSize(2)">+</button>
-                    <button class="font-size" onclick="changeFontSize(-2)">-</button>
-                    <button class="text-Location" onclick="changeTextLocation(-2)">up</button>
-                    <button class="text-Location" onclick="changeTextLocation(2)">down</button>
-
-                    <button class="line-switch" onclick="switchLines()">switch line</button>
-                </div>
                 <canvas class="generator"></canvas>
+                <div class="ui-container">
+                    <input oninput="inputTyped(this)" type="text" name="meme-text" class="meme-text">
+                    <div class="moving-ops">
+                        <button class="line-switch" onclick="switchLines()">🠕🠗</button>
+                        <select class="line-add" onchange="addLine(this.value)">
+                        <option value="">add line</option>
+                        <option value="20">top</option>
+                        <option value="150">bottom</option>
+                        <option value="70">middle</option></select>
+                        <button class="line-remove" onclick="removeLine()"><i class="fa fa-trash" aria-hidden="true"></i></button>
+                        <button class="generic-button" onclick="changeTextLocation(-2)">🠕</button>
+                        <button class="generic-button" onclick="changeTextLocation(2)">🠗</button>
+                    </div>
+                    <div class="font-options">
+                        <button class="generic-button" onclick="changeFontSize(2)">A+</button>
+                        <button class="generic-button" onclick="changeFontSize(-2)">A-</button>
+                    </div>
+                    <div class="download-options">
+                        <a href="#" class="download" onclick="downloadMeme(this)" download="my-img.jpg">Download</a>
+                        <button class="bottom-button" onclick="shareMeme()">share</button>
+                    </div>
+
+                </div>
+
+                <footer></footer>
 
             </div>
     </div>
     </main>
+    <script src="https://use.fontawesome.com/4e6d89e303.js"></script>
     <script src="js/storage-services.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/meme-service.js"></script>
