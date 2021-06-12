@@ -33,7 +33,7 @@
                 <div class="template-container"></div>
             </div>
             <div class="generator-container hidden">
-                <canvas class="generator"></canvas>
+                <canvas class="generator" width="400" height="400"></canvas>
                 <div class="ui-container">
                     <input oninput="inputTyped(this)" type="text" name="meme-text" class="meme-text">
                     <div class="moving-ops">
@@ -53,7 +53,10 @@
                     </div>
                     <div class="download-options">
                         <a href="#" class="download" onclick="downloadMeme(this)" download="my-img.jpg">Download</a>
-                        <button class="bottom-button" onclick="shareMeme()">share</button>
+
+                    </div>
+                    <div class="upload">
+                        <label for="file-input"> upload your own image!</label> <input type="file" class="file-input" name="image" onchange="onImgInput(event)" />
                     </div>
 
                 </div>

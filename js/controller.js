@@ -1,6 +1,7 @@
 'use strict'
 var gCurrImg;
-window.devicePixelRatio = 2;
+const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
+var gIsDown = false;
 
 function init() {
     renderMemes();
@@ -17,6 +18,7 @@ function loadInitialImage(currId) {
     document.querySelector('.generator-container').classList.add('flex')
     gCurrImg = new Image();
     gCurrImg.src = source;
+    addListeners();
     renderImg(gCurrImg);
     drawText(gCurrTextLine, 150, 20)
 
@@ -57,7 +59,7 @@ function renderImg() {
 function inputTyped(el) {
     gCurrTextLine.text = el.value;
     gLines.forEach((line) => {
-        clearCanvasPart(line.y)
+        clearCanvas()
 
     });
     loadImage(true);
@@ -92,6 +94,7 @@ function switchLines() {
 
     }
     document.querySelector(".meme-text").value = gCurrTextLine.text;
+    loadImage(true);
 }
 
 function changeFontSize(changeValue) {
@@ -123,4 +126,92 @@ function returnToGallery() {
     gLines = [_buildLine(20), _buildLine(130)]
     gCurrTextLine = gLines[0]
     document.querySelector(".meme-text").value = gCurrTextLine.text;
+}
+
+
+
+
+
+function getEvPos(ev) {
+    var pos = {
+        x: ev.offsetX,
+        y: ev.offsetY
+    }
+    if (gTouchEvs.includes(ev.type)) {
+        ev.preventDefault()
+        ev = ev.changedTouches[0]
+        pos = {
+            x: ev.pageX - ev.target.offsetLeft - ev.target.clientLeft,
+            y: ev.pageY - ev.target.offsetTop - ev.target.clientTop
+        }
+    }
+    return pos
+}
+
+
+
+function addListeners() {
+    addMouseListeners()
+    addTouchListeners()
+    window.addEventListener('resize', () => {
+        resizeCanvas()
+        loadImage(true)
+    })
+}
+
+function addMouseListeners() {
+    gElCanvas.addEventListener('mousemove', onMove)
+    gElCanvas.addEventListener('mousedown', onDown)
+    gElCanvas.addEventListener('mouseup', onUp)
+}
+
+function addTouchListeners() {
+    gElCanvas.addEventListener('touchmove', onMove)
+    gElCanvas.addEventListener('touchstart', onDown)
+    gElCanvas.addEventListener('touchend', onUp)
+}
+
+function onDown(ev) {
+    console.log('down');
+    const pos = getEvPos(ev)
+    if (isTextClicked(pos)) {
+        document.body.style.cursor = 'grabbing'
+        gIsDown = true;
+    }
+
+}
+
+function onMove(ev) {
+    if (gIsDown) {
+        const pos = getEvPos(ev)
+        gCurrTextLine.x = pos.x
+        gCurrTextLine.y = pos.y
+        loadImage(true);
+    }
+
+}
+
+function onUp() {
+    console.log('up!');
+    gIsDown = false;
+    document.body.style.cursor = 'grab'
+
+}
+
+function onImgInput(ev) {
+    loadImageFromInput(ev, renderImg)
+}
+
+function loadImageFromInput(ev, onImageReady) {
+    // document.querySelector('.share-container').innerHTML = ''
+    var reader = new FileReader()
+
+    reader.onload = function(event) {
+        var img = new Image()
+        img.onload = onImageReady.bind(null, img)
+        img.src = event.target.result
+        gCurrImg = img
+        loadImage(false)
+    }
+    reader.readAsDataURL(ev.target.files[0])
 }

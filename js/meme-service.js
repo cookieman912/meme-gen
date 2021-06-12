@@ -36,6 +36,7 @@ function addLine(height) {
     gLines.push(newLine)
     gCurrTextLine = newLine
     document.querySelector(".meme-text").value = gCurrTextLine.text;
+    loadImage(true);
 }
 
 
@@ -47,32 +48,13 @@ function downloadMeme(elLink) {
     loadImage(true)
 }
 
-function getObjectFitSize(isContain, containerWidth, containerHeight, width, height) {
-    var doRatio = width / height;
-    var cRatio = containerWidth / containerHeight;
-    var targetWidth = 0;
-    var targetHeight = 0;
-    var test = isContain ? doRatio > cRatio : doRatio < cRatio;
-
-    if (test) {
-        targetWidth = containerWidth;
-        targetHeight = targetWidth / doRatio;
-    } else {
-        targetHeight = containerHeight;
-        targetWidth = targetHeight * doRatio;
-    }
-
-    return {
-        width: targetWidth,
-        height: targetHeight,
-        x: (containerWidth - targetWidth) / 2,
-        y: (containerHeight - targetHeight) / 2
-    };
-}
 
 function resizeCanvas() {
-    gElCanvas.width = 400;
-    gElCanvas.height = 400;
+    function resizeCanvas() {
+        var elContainer = document.querySelector('.generator')
+        gElCanvas.width = elContainer.offsetWidth
+        gElCanvas.height = elContainer.offsetHeight
+    }
 }
 
 function removeLine() {
@@ -81,18 +63,27 @@ function removeLine() {
     let deletedline = gCurrTextLine;
     if (gLines.length > 1) switchLines();
     else {
+        document.querySelector(".meme-text").value = '';
         console.log(gLines);
         console.log('null!');
         gCurrTextLine = null
     }
     let deletedIdx = gLines.findIndex(line => deletedline.id === line.id)
     gLines.splice(deletedIdx, 1)
-    loadImage(true)
+    loadImage(true);
+
+
 
 }
 
+function isTextClicked(clickedPos) {
+    console.log(clickedPos);
+    return ((clickedPos.y > gCurrTextLine.y - 40 && clickedPos.y < gCurrTextLine.y + 20) &&
+        (clickedPos.x > gCurrTextLine.x - 150 && clickedPos.x < gCurrTextLine.x + 100))
+}
+
 function _buildLine(y) {
-    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId }
+    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId, isDrag: false }
     gTextId++;
     return newLine;
 }

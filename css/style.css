@@ -336,6 +336,27 @@ img {
     box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
 }
 
+.upload {
+    background-color: #fff;
+    color: black;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0.5em;
+    border-bottom: 4px solid #3E7D7A;
+    ;
+}
+
+.upload:hover {
+    background-color: #000000;
+    color: white;
+    border-bottom: 4px solid #a7acac;
+}
+
+.file-input :hover {
+    cursor: pointer;
+}
+
 
 /* phone settings */
 
