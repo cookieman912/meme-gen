@@ -1,10 +1,12 @@
 'use strict'
-var gCurrImg;
+
 const gTouchEvs = ['touchstart', 'touchmove', 'touchend']
 var gIsDown = false;
 
 function init() {
     renderMemes();
+    getLocalMemes()
+    console.log(gMemes);
 }
 
 
@@ -19,8 +21,7 @@ function loadInitialImage(currId) {
     gCurrImg = new Image();
     gCurrImg.src = source;
     addListeners();
-    renderImg(gCurrImg);
-    drawText(gCurrTextLine, 150, 20)
+    loadImage(true)
 
 }
 
@@ -39,10 +40,10 @@ function loadImage(withBoxes) {
 
 
 function renderMemes() {
-    var strSearch = document.querySelector('.searchbar').value
+    let strSearch = document.querySelector('.searchbar').value
     strSearch.toLowerCase();
 
-    var strHtmls = '';
+    let strHtmls = '';
     gImgs.forEach(img => {
         if (img.keywords.some(keyword => keyword.includes(strSearch)))
             strHtmls += `<div class="meme-grid-item"><img onclick="loadInitialImage('${img.id}')" id=${img.id} src="${img.url}" alt=""></div>`
@@ -50,6 +51,17 @@ function renderMemes() {
     document.querySelector('.template-container').innerHTML = strHtmls
 
 
+}
+
+function renderSavedMemes() {
+    let strHtmls = '';
+    gMemes.forEach(meme => {
+        console.log(meme)
+        console.log(meme.img.src);
+        strHtmls += `<div class="meme-grid-item"><img onclick="loadSavedMeme('${meme.id}')" src="${meme.img.src}" alt=""></div>`
+
+    })
+    document.querySelector('.template-container').innerHTML = strHtmls
 }
 
 function renderImg() {
@@ -78,7 +90,7 @@ function drawText(line) {
 
 function drawBox(x, y) {
     gCtx.beginPath()
-    gCtx.rect(x - 150, y - 40, x + 100, y + 20)
+    gCtx.rect(x - 180, y - (gCurrTextLine.fontSize * 1.2), 350, (gCurrTextLine.fontSize * 1.2))
     gCtx.strokeStyle = 'black'
     gCtx.stroke()
 }
@@ -128,6 +140,11 @@ function returnToGallery() {
     document.querySelector(".meme-text").value = gCurrTextLine.text;
 }
 
+function onSaveMeme() {
+    let currMeme = buildMeme();
+    gMemes.push(currMeme);
+    saveMemes();
+}
 
 
 

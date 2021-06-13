@@ -38,10 +38,10 @@ body {
 
 .logo {
     width: 40%;
-    margin-left: 10%;
     text-transform: uppercase;
     margin-top: auto;
     margin-bottom: auto;
+    margin-right: 20%;
 }
 
 .main-nav ul {
@@ -142,6 +142,15 @@ body {
     font-family: poppins;
 }
 
+.more:hover {
+    color: #21AC91;
+    background-color: #FEFEFE;
+    border-left: 0.3em solid white;
+    border-right: 0.3em solid white;
+    border-radius: 1.2em;
+    cursor: pointer;
+}
+
 .template-container {
     height: 100%;
     width: 100%;
@@ -201,11 +210,12 @@ img {
     background-color: #3FB0CD;
     color: white;
     border: none;
-    font-size: 1.8em;
     border-radius: .3em;
     margin-left: 2px;
     border-bottom: 4px solid #048B97;
     cursor: pointer;
+    height: 48px;
+    width: 4em;
 }
 
 .line-switch:hover {
@@ -227,6 +237,8 @@ img {
     font-family: poppins;
     border-bottom: 4px solid #015D33;
     cursor: pointer;
+    height: 48px;
+    width: 4em;
 }
 
 .line-add :hover {
@@ -242,6 +254,8 @@ img {
     font-family: poppins;
     border-bottom: 4px solid #8C0606;
     cursor: pointer;
+    height: 48px;
+    width: 4em;
 }
 
 .line-remove:hover {
@@ -262,57 +276,47 @@ img {
     width: 2.5rem;
 }
 
-.generic-button {
-    background-color: #FFFFFF;
-    border: none;
-    border-radius: 0.3em;
-    color: rgb(0, 0, 0);
-    font-family: poppins;
-    border-bottom: 4px solid #3E7D7A;
-    cursor: pointer;
-    font-size: 1.2rem;
-    width: 2.5rem;
-}
-
-.generic-button:hover {
-    background-color: #000000;
-    color: white;
-    border-bottom: 4px solid #a7acac;
-}
-
-.generic-button:active {
-    -webkit-box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
-    box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
-}
-
 .line-remove:active {
     -webkit-box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
     box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
 }
 
-.bottom-button {
-    height: 38px;
+.button {
+    height: 48px;
     border: none;
     font-size: 1.5rem;
     font-family: poppins;
     border-radius: 0.3em;
     border-bottom: 4px solid #3E7D7A;
     cursor: pointer;
+    width: 3em;
 }
 
-.bottom-button:active {
+.font-options :first-child {
+    margin-left: 15px;
+}
+
+.font-options :last-child {
+    margin-right: 15px;
+}
+
+.button:active {
     -webkit-box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
     box-shadow: 0px -6px 8px -1px rgba(185, 194, 199, 0.37);
 }
 
-.bottom-button:hover {
+.button:hover {
     background-color: #000000;
     color: white;
     border-bottom: 4px solid #a7acac;
 }
 
+.download-container {
+    margin: 10px auto;
+    width: 50%;
+}
+
 .download {
-    height: 40px;
     background-color: #FFFFFF;
     border: none;
     border-radius: 0.3em;
@@ -320,9 +324,10 @@ img {
     font-family: poppins;
     border-bottom: 4px solid #3E7D7A;
     cursor: pointer;
-    font-size: 1.5rem;
-    width: 2.5rem;
+    font-size: 20px;
     text-decoration: none;
+    padding-left: 11.5%;
+    padding-right: 11.5%;
 }
 
 .download:hover {
@@ -337,23 +342,44 @@ img {
 }
 
 .upload {
-    background-color: #fff;
-    color: black;
-    width: 80%;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 0.5em;
+    background-color: rgb(243, 243, 243);
+    width: 50%;
+    margin: 10px auto;
+    border-radius: .3em;
     border-bottom: 4px solid #3E7D7A;
     ;
 }
 
-.upload:hover {
-    background-color: #000000;
-    color: white;
-    border-bottom: 4px solid #a7acac;
+.upload-label {
+    color: #000000;
+    font-size: 20px;
+    font-family: poppins;
 }
 
-.file-input :hover {
+.upload-label:hover {
+    cursor: pointer;
+}
+
+#upload-image {
+    display: none;
+}
+
+.file-input::-webkit-file-upload-button {
+    visibility: hidden;
+}
+
+.file-input {
+    color: black;
+    display: inline-block;
+    background: -webkit-linear-gradient(top, #696b6b);
+    font-size: 1rem;
+    border-radius: 1.3em;
+    padding: 5px 8px;
+    -webkit-user-select: none;
+    cursor: pointer;
+}
+
+.file-input:hover {
     cursor: pointer;
 }
 
@@ -363,6 +389,10 @@ img {
 @media (max-width:780px) {
     .main-layout {
         max-width: 450px;
+    }
+    .logo {
+        margin-right: 0%;
+        margin-left: 10%;
     }
     .gallery-nav {
         display: grid;

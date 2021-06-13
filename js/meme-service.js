@@ -7,22 +7,15 @@ var gImgs = [{ id: '1', url: 'img/1.jpg', keywords: ['trump', 'donald'], }, { id
     { id: '14', url: 'img/14.jpg', keywords: ['morpheus', 'matrix', 'what if i told you'] }, { id: '15', url: 'img/15.jpg', keywords: ['boromir', 'mordor', 'one does not simply'] }, { id: '16', url: 'img/16.jpg', keywords: ['picard', 'star trek'] },
     { id: '17', url: 'img/17.jpg', keywords: ['vladimir putin'] }, { id: '18', url: 'img/18.jpg', keywords: ['toy story', 'everywhere', 'buzz lightyear'] },
 ];
-
-// var gMeme = {
-//     selectedImgId: 5,
-//     selectedLineIdx: 0,
-//     lines: [{
-//         txt: 'I never eat Falafel',
-//         size: 20,
-//         align: 'left',
-//         color: 'red'
-//     }]
-// }
+const MEMEKEY = 'memes';
+var gCurrImg;
+var gMemes;
 var gTextId = 0;
 var gLines = [_buildLine(20), _buildLine(380)]
 var gCurrTextLine = gLines[0];
 var gElCanvas = document.querySelector('.generator')
-resizeCanvas();
+
+
 var gCtx = gElCanvas.getContext('2d')
 var gFontSize = 16;
 
@@ -50,11 +43,9 @@ function downloadMeme(elLink) {
 
 
 function resizeCanvas() {
-    function resizeCanvas() {
-        var elContainer = document.querySelector('.generator')
-        gElCanvas.width = elContainer.offsetWidth
-        gElCanvas.height = elContainer.offsetHeight
-    }
+    var elContainer = document.querySelector('.generator')
+    gElCanvas.width = elContainer.offsetWidth
+    gElCanvas.height = elContainer.offsetHeight
 }
 
 function removeLine() {
@@ -83,7 +74,33 @@ function isTextClicked(clickedPos) {
 }
 
 function _buildLine(y) {
-    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId, isDrag: false }
+    var newLine = { text: '', fontSize: 16, y, x: 200, id: gTextId, }
     gTextId++;
     return newLine;
+}
+
+function buildMeme() {
+    console.dir(gCurrImg);
+    let meme = {
+        img: gCurrImg,
+        lines: gLines,
+        id: makeId()
+    }
+    console.log(meme.img);
+    return meme;
+}
+
+function getLocalMemes() {
+    let memes = _loadMemes();
+    if (!memes) gMemes = [];
+    else gMemes = memes;
+
+}
+
+function saveMemes() {
+    saveToStorage(MEMEKEY, gMemes)
+}
+
+function _loadMemes() {
+    return loadFromStorage(MEMEKEY)
 }

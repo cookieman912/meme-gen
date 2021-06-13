@@ -29,7 +29,7 @@
                         <li>funny</li>
                         <li>animal</li>
                         <li>man</li>
-                    </ul> <button class="more">more</button></nav>
+                </nav>
                 <div class="template-container"></div>
             </div>
             <div class="generator-container hidden">
@@ -39,25 +39,34 @@
                     <div class="moving-ops">
                         <button class="line-switch" onclick="switchLines()">🠕🠗</button>
                         <select class="line-add" onchange="addLine(this.value)">
-                        <option value="">add line</option>
-                        <option value="20">top</option>
-                        <option value="380">bottom</option>
-                        <option value="220">middle</option></select>
-                        <button class="line-remove" onclick="removeLine()"><i class="fa fa-trash" aria-hidden="true"></i></button>
-                        <button class="generic-button" onclick="changeTextLocation(-4)">🠕</button>
-                        <button class="generic-button" onclick="changeTextLocation(4)">🠗</button>
-                    </div>
-                    <div class="font-options">
-                        <button class="generic-button" onclick="changeFontSize(4)">A+</button>
-                        <button class="generic-button" onclick="changeFontSize(-4)">A-</button>
-                    </div>
-                    <div class="download-options">
-                        <a href="#" class="download" onclick="downloadMeme(this)" download="my-img.jpg">Download</a>
+                            <option value="">add line</option>
+                            <option value="20">top</option>
+                            <option value="380">bottom</option>
+                            <option value="220">middle</option>
+                        </select>
+                        <button class="line-remove" onclick="removeLine()"><i class="fa fa-trash"
+                                aria-hidden="true"></i></button>
 
                     </div>
-                    <div class="upload">
-                        <label for="file-input"> upload your own image!</label> <input type="file" class="file-input" name="image" onchange="onImgInput(event)" />
+                    <div class="font-options">
+                        <button class="button" onclick="changeTextLocation(-4)">🠕</button>
+                        <button class="button" onclick="changeTextLocation(4)">🠗</button>
+                        <button class="button" onclick="changeFontSize(4)">A+</button>
+                        <button class="button" onclick="changeFontSize(-4)">A-</button>
                     </div>
+                    <div class="download-options">
+                        <div class="download-container">
+                            <a href="#" class="download" onclick="downloadMeme(this)" download="my-img.jpg">Download</a>
+                        </div>
+                        <div class="upload">
+                            <label class="upload-label" for="upload-image"> Upload</label>
+                            <input type="file" class="file-input" id="upload-image" onchange="onImgInput(event)" />
+
+                        </div>
+
+
+                    </div>
+
 
                 </div>
 
